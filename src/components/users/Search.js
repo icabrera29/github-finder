@@ -33,7 +33,7 @@ class Search extends Component {
           />
           <input
             type="submit"
-            value="Search"
+            value="Buscar"
             className="btn btn-dark btn-block"
           />
         </form>
