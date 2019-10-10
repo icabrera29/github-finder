@@ -1,52 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-class Search extends Component {
-  state = {
-    text: ''
-  };
+const Search = ({ showClear, clearUsers, searchUsers, setAlert }) => {
+  const [text, setText] = useState('');
 
-  onSubmit = e => {
+  const onSubmit = e => {
     // this funciona diferente en arrow functions, bindea automaticamente
     e.preventDefault();
-    if (this.state.text === '') {
-      this.props.setAlert('Please enter something', 'light');
+    if (text === '') {
+      setAlert('Please enter something', 'light');
     } else {
-      console.log(this.state.text);
-      this.props.searchUsers(this.state.text);
+      console.log(text);
+      searchUsers(text);
     }
   };
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  const onChange = e => setText(e.target.value);
 
-  render() {
-    const { showClear, clearUsers } = this.props;
-    return (
-      <div>
-        <form onSubmit={this.onSubmit} className="form">
-          <input
-            type="text"
-            name="text"
-            placeholder="Buscar usuario..."
-            value={this.state.text}
-            onChange={this.onChange}
-          />
-          <input
-            type="submit"
-            value="Buscar"
-            className="btn btn-dark btn-block"
-          />
-        </form>
+  return (
+    <div>
+      <form onSubmit={onSubmit} className="form">
+        <input
+          type="text"
+          name="text"
+          placeholder="Buscar usuario..."
+          value={text}
+          onChange={onChange}
+        />
+        <input
+          type="submit"
+          value="Buscar"
+          className="btn btn-dark btn-block"
+        />
+      </form>
 
-        {showClear && (
-          <button className="btn btn-light btn-block" onClick={clearUsers}>
-            Clear
-          </button>
-        )}
-      </div>
-    );
-  }
-}
+      {showClear && (
+        <button className="btn btn-light btn-block" onClick={clearUsers}>
+          Clear
+        </button>
+      )}
+    </div>
+  );
+};
 
 Search.propTypes = {
   searchUsers: PropTypes.func.isRequired,
